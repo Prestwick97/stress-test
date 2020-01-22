@@ -1,21 +1,25 @@
-$(document).ready(function(){
-  $("form#stress-survey").submit(function(event){
+$(document).ready(function() {
+  $("#stress-survey").submit(function(event) {
     event.preventDefault();
-    $("#need-work").show();
-    $("input:checkbox[name=warning-signs]:checked").each(function(){
-      var workTransportationMode = $(this).val();
-      $('#need-work').append(workTransportationMode + "<br>");
-    });
-    $("#seek-help").show();
-    $("input:checkbox[name=health-symptoms]:checked").each(function(){
-      var funTransportationMode = $(this).val();
-      $('#seek-help').append(funTransportationMode + "<br>");
-        });
-    $("#doing-good").show();
-    $("input:checkbox[name=coping-methods]:checked").each(function(){
-      var funTransportationMode = $(this).val();
-      $('#doing-good').append(funTransportationMode + "<br>");  
-    });
-    $('#stress-survey').hide();
-  });
-});
+    
+    var score = 0;
+    $("input:checkbox[name=warning-signs]:checked").each(function() {
+      score += 1;
+    })
+    $("input:checkbox[name=health-symptoms]:checked").each(function() {
+      score += 1;
+    })
+    $("input:checkbox[name=coping-methods]:checked").each(function() {
+      score += 1;
+    })
+    console.log(score);
+    if(score > 9) {
+      $("#seek-help").show();
+    } else if(score > 4 && score <= 9) {
+      $("#need-work").show();
+    } else {
+      $("#doing-good").show();
+    }
+    $("#stress-survey")[0].reset();
+  })
+})
